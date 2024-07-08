@@ -8,6 +8,9 @@ use("kec-curd");
 // ? $sort => order ma data dekuna
 // ? $limit => max ma yeti data dekhaune bhanera use garne
 // ? $skip
+// ? $lookup
+// ? $unwind
+// TODO: $group
 
 // db.movies.aggregate([
 //   {
@@ -153,23 +156,49 @@ use("kec-curd");
 // ]);
 
 // ? find 5 movies whose rating is greater than 8 and id is sorted in ascending order
-db.movies.aggregate([
-  {
-    $match: {
-      "rating.average": { $gt: 8 },
-    },
-  },
-  {
-    $sort: {
-      id: 1,
-    },
-  },
-  { $limit: 5 },
-  {
-    $project: {
-      _id: 0,
-      id: 1,
-      name: 1,
-    },
-  },
-]);
+// db.movies.aggregate([
+//   {
+//     $match: {
+//       "rating.average": { $gt: 8 },
+//     },
+//   },
+//   {
+//     $sort: {
+//       id: 1,
+//     },
+//   },
+//   { $limit: 5 },
+//   {
+//     $project: {
+//       _id: 0,
+//       id: 1,
+//       name: 1,
+//     },
+//   },
+//   { $skip: 5 },
+//   { $limit: 2 },
+// ]);
+
+// let page = 2;
+// let limit = 30;
+// let skip = (page - 1) * limit;
+
+// db.movies.aggregate([
+//   {
+//     $match: {},
+//   },
+//   {
+//     $sort: {
+//       id: 1,
+//     },
+//   },
+//   { $skip: skip },
+//   { $limit: limit },
+//   {
+//     $project: {
+//       _id: 0,
+//       id: 1,
+//       name: 1,
+//     },
+//   },
+// ]);
