@@ -202,3 +202,5 @@ use("kec-curd");
 //     },
 //   },
 // ]);
+
+// db.movies.find();
