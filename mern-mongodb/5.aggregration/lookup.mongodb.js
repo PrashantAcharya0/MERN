@@ -114,28 +114,54 @@ use("kec-curd");
 //   ownerId: new ObjectId("668bb7e94b1357e615741924"),
 // });
 
-db.person.aggregate([
-  {
-    $match: {
-      firstName: "Enish",
-    },
-  },
-  {
-    $lookup: {
-      localField: "_id",
-      from: "vehicle",
-      foreignField: "ownerId",
-      as: "vehicleData",
-    },
-  },
-  {
-    $project: {
-      firstName: 1,
-      lastName: 1,
-      models: "$vechileData.model",
-      "vechileData.model": 1,
-      "vechileData.brand": 1,
-      lastCarBrand: { $first: "$vechileData.brand" },
-    },
-  },
-]);
+// db.person.aggregate([
+//   {
+//     $match: {
+//       firstName: "Enish",
+//     },
+//   },
+//   {
+//     $lookup: {
+//       localField: "_id",
+//       from: "vehicle",
+//       foreignField: "ownerId",
+//       as: "vehicleData",
+//     },
+//   },
+//   {
+//     $project: {
+//       firstName: 1,
+//       lastName: 1,
+//       models: "$vechileData.model",
+//       "vechileData.model": 1,
+//       "vechileData.brand": 1,
+//       lastCarBrand: { $first: "$vechileData.brand" },
+//     },
+//   },
+// ]);
+
+// ? find the owner of Ford Mustang car
+// db.vehicle.find();
+// db.person.aggregate([
+//   {
+//     $match: {
+//       model: "Mustang",
+//     },
+//   },
+//   {
+//     $lookup: {
+//       from: "person",
+//       localField: "ownerId",
+//       foreignField: "_id",
+//       as: "ownerDetails",
+//     },
+//   },
+//   {
+//     $project: {
+//       model: 1,
+//       brand: 1,
+//       ownerFirstname: { $first: "$vehicleData.firstname" },
+//       ownerLastname: { $first: "$vehicleData.lastname" },
+//     },
+//   },
+// ]);
