@@ -11,3 +11,5 @@ use("kec-curd");
 
 // TODO: optimization
 // TODO: index, queryExecutionTimes,  co-orinate
+
+//test dummy yettikai
