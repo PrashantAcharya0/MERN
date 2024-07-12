@@ -15,4 +15,3 @@ router.post("/add", validateResturantData, addResturant);
 router.delete("/delete/:id", validateMongoIdFromParams, deleteResturant);
 
 export default router;
-
