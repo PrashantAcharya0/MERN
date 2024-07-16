@@ -6,7 +6,7 @@ import { string } from "yup";
 //   unit: String,
 // });
 
-// set schema
+// Set Schema
 const foodschema = new mongoose.Schema({
   name: {
     type: String,
