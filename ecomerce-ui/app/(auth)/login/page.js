@@ -9,16 +9,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Formik } from "formik";
+
 const Login = () => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <Box>
       <Formik
         initialValues={{
           email: "",
@@ -33,7 +27,8 @@ const Login = () => {
           return (
             <form
               onSubmit={formik.handleSubmit}
-              className="flex flex-col justify-between max-w-[400px] shadow-2xl p-8 min-h-[300px]"
+              className="flex flex-col justify-between items-center min-w-[400px] shadow-2xl
+               shadow-slate-500 px-8 py-4 min-h-[400px]"
             >
               <Typography variant="h3">Sign in</Typography>
 
