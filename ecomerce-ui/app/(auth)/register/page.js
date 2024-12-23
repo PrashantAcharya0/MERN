@@ -1,5 +1,5 @@
-"use client";
-import registerUserValidationSchema from "@/validation-schema/register.user.validation.schema";
+'use client';
+import registerUserValidationSchema from '@/validation-schema/register.user.validation.schema';
 import {
   Box,
   Button,
@@ -7,23 +7,23 @@ import {
   FormHelperText,
   TextField,
   Typography,
-} from "@mui/material";
-import { Formik } from "formik";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+} from '@mui/material';
+import { Formik } from 'formik';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 const register = () => {
   return (
     <Box>
       <Formik
         initialValues={{
-          email: "",
-          password: "",
-          firstName: "",
-          lastName: "",
-          gender: "",
-          role: "",
+          email: '',
+          password: '',
+          firstName: '',
+          lastName: '',
+          gender: '',
+          role: '',
         }}
         validationSchema={registerUserValidationSchema}
         onSubmit={(values) => {
@@ -41,7 +41,7 @@ const register = () => {
 
               {/* Email */}
               <FormControl fullWidth>
-                <TextField label="Email" {...formik.getFieldProps("email")} />
+                <TextField label="Email" {...formik.getFieldProps('email')} />
                 {formik.touched.email && formik.errors.email ? (
                   <FormHelperText error>{formik.errors.email}</FormHelperText>
                 ) : null}
@@ -51,7 +51,7 @@ const register = () => {
               <FormControl fullWidth>
                 <TextField
                   label="Password"
-                  {...formik.getFieldProps("password")}
+                  {...formik.getFieldProps('password')}
                 />
                 {formik.touched.password && formik.errors.password ? (
                   <FormHelperText error>
@@ -64,7 +64,7 @@ const register = () => {
               <FormControl fullWidth>
                 <TextField
                   label="FirstName"
-                  {...formik.getFieldProps("firstName")}
+                  {...formik.getFieldProps('firstName')}
                 />
                 {formik.touched.firstName && formik.errors.firstName ? (
                   <FormHelperText error>
@@ -77,7 +77,7 @@ const register = () => {
               <FormControl fullWidth>
                 <TextField
                   label="LastName"
-                  {...formik.getFieldProps("lastName")}
+                  {...formik.getFieldProps('lastName')}
                 />
                 {formik.touched.lastName && formik.errors.lastName ? (
                   <FormHelperText error>
@@ -89,7 +89,7 @@ const register = () => {
               {/* Gender */}
               <FormControl fullWidth>
                 <InputLabel>Gender</InputLabel>
-                <Select {...formik.getFieldProps("gender")}>
+                <Select {...formik.getFieldProps('gender')}>
                   <MenuItem value="male">Male</MenuItem>
                   <MenuItem value="female">Female</MenuItem>
                   <MenuItem value="other">Other</MenuItem>
@@ -102,7 +102,7 @@ const register = () => {
               {/* Role */}
               <FormControl fullWidth>
                 <InputLabel>Role</InputLabel>
-                <Select {...formik.getFieldProps("role")}>
+                <Select {...formik.getFieldProps('role')}>
                   <MenuItem value="buyer">Buyer</MenuItem>
                   <MenuItem value="seller">Seller</MenuItem>
                 </Select>
