@@ -1,56 +1,70 @@
 'use client';
+
+import $axios from '@/lib/axios/axios.instance';
 import loginUserValidationSchema from '@/validation-schema/login.user.validation.schema';
 import {
   Box,
   Button,
   FormControl,
   FormHelperText,
+  LinearProgress,
   TextField,
-  Typography,
 } from '@mui/material';
-import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
 import { Formik } from 'formik';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 const Login = () => {
   const router = useRouter();
+
+  const {
+    isPending,
+    error,
+    mutate: handleLogin,
+  } = useMutation({
+    mutationKey: ['login-user'],
+    mutationFn: async (values) => {
+      return await $axios.post('/user/login', values);
+    },
+    onSuccess: (response) => {
+      console.log(response);
+      window.localStorage.setItem('token', response?.data?.accessToken);
+      window.localStorage.setItem(
+        'firstName',
+        response?.data?.userDetails?.firstName
+      );
+
+      window.localStorage.setItem(
+        'userRole',
+        response?.data?.userDetails?.role
+      );
+
+      router.push('/');
+    },
+
+    onError: (error) => {
+      console.log(error.response.data.message);
+    },
+  });
   return (
     <Box>
+      {isPending && <LinearProgress color="secondary" />}
       <Formik
         initialValues={{
           email: '',
           password: '',
         }}
         validationSchema={loginUserValidationSchema}
-        onSubmit={async (values) => {
-          try {
-            const reponse = await axios({
-              method: 'POST',
-              url: 'http://localhost:8080/user/login',
-              data: values,
-            });
-
-            localStorage.setItem('token', reponse?.data?.accessToken);
-            localStorage.setItem('userRole', reponse?.data?.userDetails?.role);
-            localStorage.setItem(
-              'firstName',
-              reponse?.data?.userDetails?.firstName
-            );
-            router.push('/');
-          } catch (err) {
-            console.log(err);
-          }
+        onSubmit={(values) => {
+          handleLogin(values);
         }}
       >
         {(formik) => {
           return (
-            <form
-              onSubmit={formik.handleSubmit}
-              className="flex flex-col justify-between items-center min-w-[400px] shadow-2xl
-               shadow-slate-500 px-8 py-4 min-h-[400px]"
-            >
-              <Typography variant="h3">Sign in</Typography>
-
+            <form onSubmit={formik.handleSubmit} className="auth-form ">
+              <p className="text-3xl font-bold">Login</p>
+              {/* email */}
               <FormControl fullWidth>
                 <TextField label="Email" {...formik.getFieldProps('email')} />
                 {formik.touched.email && formik.errors.email ? (
@@ -58,6 +72,7 @@ const Login = () => {
                 ) : null}
               </FormControl>
 
+              {/* password */}
               <FormControl fullWidth>
                 <TextField
                   label="Password"
@@ -69,14 +84,25 @@ const Login = () => {
                   </FormHelperText>
                 ) : null}
               </FormControl>
-              <Button
-                fullWidth
-                type="submit"
-                variant="contained"
-                color="secondary"
-              >
-                Login
-              </Button>
+
+              <div className="w-full flex flex-col justify-center items-center">
+                <Button
+                  fullWidth
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                  disabled={isPending}
+                >
+                  sign in
+                </Button>
+
+                <Link
+                  href="/register"
+                  className="text-md underline text-blue-600 mt-2"
+                >
+                  New here? Register
+                </Link>
+              </div>
             </form>
           );
         }}

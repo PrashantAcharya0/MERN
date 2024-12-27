@@ -1,12 +1,27 @@
 import * as Yup from 'yup';
 
-const userValidationSchema = Yup.object({
-  email: Yup.string().email().required().trim().max(55).lowercase(),
-  password: Yup.string().required().trim(),
-  firstName: Yup.string().required().trim().max(30),
-  lastName: Yup.string().required().trim().max(30),
-  gender: Yup.string().required().trim().oneOf(['male', 'female', 'other']),
-  role: Yup.string().trim().required().oneOf(['buyer', 'seller']),
+export const registerUserValidationSchema = Yup.object({
+  email: Yup.string()
+    .email('Must be a valid email.')
+    .required('Email is required.')
+    .trim()
+    .lowercase()
+    .max(55, 'Email must be at max 55 characters.'),
+  password: Yup.string().required('Password is required.').trim(),
+  firstName: Yup.string()
+    .required('First name is required.')
+    .trim()
+    .max(30, 'First name must be at max 30 characters.'),
+  lastName: Yup.string()
+    .required('Last name is required.')
+    .trim()
+    .max(30, 'Last name must be at max 30 characters.'),
+  gender: Yup.string()
+    .trim()
+    .required('Gender is required.')
+    .oneOf(['male', 'female', 'other']),
+  role: Yup.string()
+    .trim()
+    .required('Role is required.')
+    .oneOf(['buyer', 'seller']),
 });
-
-export default userValidationSchema;
