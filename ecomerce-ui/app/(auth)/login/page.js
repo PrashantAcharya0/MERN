@@ -1,7 +1,7 @@
 'use client';
 
 import $axios from '@/lib/axios/axios.instance';
-import loginUserValidationSchema from '@/validation-schema/login.user.validation.schema';
+import { loginUserValidationSchema } from '@/validation-schema/login.user.validation.schema';
 import {
   Box,
   Button,
@@ -18,11 +18,7 @@ import { useRouter } from 'next/navigation';
 const Login = () => {
   const router = useRouter();
 
-  const {
-    isPending,
-    error,
-    mutate: handleLogin,
-  } = useMutation({
+  const { isPending, error, mutate } = useMutation({
     mutationKey: ['login-user'],
     mutationFn: async (values) => {
       return await $axios.post('/user/login', values);
@@ -57,7 +53,7 @@ const Login = () => {
         }}
         validationSchema={loginUserValidationSchema}
         onSubmit={(values) => {
-          handleLogin(values);
+          mutate(values);
         }}
       >
         {(formik) => {
