@@ -15,7 +15,13 @@ const ProductCard = () => {
           ' rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
       }}
     >
-      <Image src="/hobbit.jpg" height={400} width={400} alt="Book image" />
+      <Image
+        src="/hobbit.jpg"
+        alt="Book image"
+        height={400}
+        width={400}
+        priority
+      />
       <Box
         sx={{
           padding: '1rem',

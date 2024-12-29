@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <div>
-      <p className="text-5xl bold underline mb-4">Welcome {firstName}</p>
+      <p className="text-5xl text-purple-600 bold mb-4">Welcome {firstName}</p>
 
       <Button
         variant="outlined"

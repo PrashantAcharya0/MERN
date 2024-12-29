@@ -1,7 +1,7 @@
 'use client';
 
 import $axios from '@/lib/axios/axios.instance';
-import { loginUserValidationSchema } from '@/validation-schema/login.user.validation.schema';
+import loginUserValidationSchema from '@/validation-schema/login.user.validation.schema';
 import {
   Box,
   Button,
