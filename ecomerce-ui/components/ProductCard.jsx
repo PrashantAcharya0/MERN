@@ -5,42 +5,34 @@ import React from 'react';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 
-const ProductCard = () => {
+const ProductCard = (props) => {
   return (
-    <Box
-      sx={{
-        mt: 2,
-        width: '400px',
-        boxShadow:
-          ' rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
-      }}
-    >
+    <Box className="w-[400px] shadow-2xl flex flex-col justify-between">
+      {/* TODO: manage overflow */}
       <Image
-        src="/hobbit.jpg"
-        alt="Book image"
+        src={props.image || '/hobbit.jpg'}
         height={400}
         width={400}
-        priority
+        alt="Book image"
       />
-      <Box
-        sx={{
-          padding: '1rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-        }}
-      >
+      <Box className="flex flex-col gap-8 p-4">
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h5">Book</Typography>
-          <Chip label="Sajha" color="success" variant="outlined" />
-          <Typography variant="h5">$400</Typography>
+          <Typography variant="h5">{props.name}</Typography>
+          <Chip label={props.brand} color="success" variant="outlined" />
+          <Typography variant="h5">${props.price}</Typography>
         </Stack>
 
-        <Typography sx={{ textAlign: 'justify' }}>
-          The Hobbit is set in Middle-earth and follows home-loving Bilbo
-          Baggins, the hobbit of the title, who joins the wizard Gandalf and the
-          thirteen dwarves of Thorin's Company, on a quest to reclaim the
-          dwarves' home and treasure from the dragon Smaug...
+        <Typography
+          sx={{
+            textAlign: 'justify',
+            display: '-webkit-box', // handle multi-line truncation.
+            WebkitBoxOrient: 'vertical', // Defines the direction in which the text content flows inside the box
+            WebkitLineClamp: 6, // Limits the number of visible lines to 6
+            overflow: 'hidden', // Hide overflow
+            height: '150px',
+          }}
+        >
+          {props.description}
         </Typography>
         <Stack direction="row" justifyContent="space-between">
           <Button

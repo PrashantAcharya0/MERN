@@ -22,23 +22,12 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const AddProduct = () => {
-  const [accessToken, setAccessToken] = useState(null);
-
-  useEffect(() => {
-    const token = window.localStorage.getItem('token');
-    setAccessToken(token);
-  }, []);
-
   const router = useRouter();
 
   const { isPending, error, mutate } = useMutation({
     mutationKey: ['add-product'],
     mutationFn: async (values) => {
-      return await $axios.post('/product/add', values, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      return await $axios.post('/product/add', values);
     },
     onSuccess: (res) => {
       router.push('/');
