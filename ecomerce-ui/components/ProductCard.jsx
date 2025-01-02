@@ -27,9 +27,9 @@ const ProductCard = (props) => {
             textAlign: 'justify',
             display: '-webkit-box', // handle multi-line truncation.
             WebkitBoxOrient: 'vertical', // Defines the direction in which the text content flows inside the box
-            WebkitLineClamp: 6, // Limits the number of visible lines to 6
+            WebkitLineClamp: 5, // Limits the number of visible lines to 6
             overflow: 'hidden', // Hide overflow
-            height: '150px',
+            height: '120px',
           }}
         >
           {props.description}
