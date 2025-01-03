@@ -4,8 +4,11 @@ import Image from 'next/image';
 import React from 'react';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import { useMutation } from '@tanstack/react-query';
 
 const ProductCard = (props) => {
+  const productId = props._id;
+
   return (
     <Box className="w-[400px] shadow-2xl flex flex-col justify-between">
       {/* TODO: manage overflow */}
@@ -35,13 +38,6 @@ const ProductCard = (props) => {
           {props.description}
         </Typography>
         <Stack direction="row" justifyContent="space-between">
-          <Button
-            color="error"
-            variant="contained"
-            startIcon={<DeleteOutlineOutlinedIcon />}
-          >
-            Delete
-          </Button>
           <Button
             color="success"
             variant="contained"

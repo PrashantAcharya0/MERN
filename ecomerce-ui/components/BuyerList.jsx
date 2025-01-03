@@ -6,6 +6,7 @@ import React from 'react';
 // import Loader from './Loader';
 import { CircularProgress, Pagination } from '@mui/material';
 import ProductCard from './ProductCard';
+import { isBuyer } from '@/utlis/check.role';
 
 const BuyerList = () => {
   const { data, isPending, error } = useQuery({
@@ -20,6 +21,8 @@ const BuyerList = () => {
     onError: (error) => {
       console.log(error);
     },
+
+    enabled: isBuyer(),
   });
 
   const productList = data?.data?.productList;
@@ -32,7 +35,7 @@ const BuyerList = () => {
     return <div>{error}</div>;
   }
   return (
-    <div className="flex flex-col justify-between items-center gap-8  ">
+    <div className="flex flex-col justify-between items-center gap-8 mt-8">
       <div className="flex justify-center items-center gap-8 flex-wrap">
         {productList.map((item) => {
           return <ProductCard key={item._id} {...item} />;
