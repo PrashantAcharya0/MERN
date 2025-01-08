@@ -2,42 +2,53 @@
 import $axios from '@/lib/axios/axios.instance';
 import { CircularProgress, Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import ProductCard from './ProductCard';
+import { useEffect, useState } from 'react';
 import { isSeller } from '@/utlis/check.role';
-import Loader from './loader';
 
 const SellerList = () => {
+  const [role, setRole] = useState('');
+  useEffect(() => {
+    setRole(window.localStorage.getItem('userRole'));
+  });
   const [page, setPage] = useState(1);
-
   const { isPending, data, error } = useQuery({
-    queryKey: ['seller-product-list'],
+    queryKey: ['seller-product-list', page],
     queryFn: async () => {
       return await $axios.post('/product/seller/list', {
         page: page,
         limit: 2,
+        // searchText: '',
       });
     },
     enabled: isSeller(),
   });
-  const productList = data?.data?.productList;
+
+  const productList = data?.data?.productList || [];
+
+  console.log(productList);
 
   if (isPending) {
-    return <Loader isPending />;
+    return <CircularProgress />;
   }
 
-  if (error) {
-    return <h1>{error}</h1>;
-  }
   return (
-    <div className="flex flex-col justify-between items-center gap-8  ">
-      <div className="flex justify-center items-center gap-8 flex-wrap">
-        {productList.map((item) => {
-          return <ProductCard key={item._id} {...item} />;
-        })}
+    <>
+      <div className="card-center">
+        {productList?.length ? (
+          productList?.map((item) => {
+            return <ProductCard key={item._id} {...item} />;
+          })
+        ) : (
+          <p className="text-3xl bold text-red-500">No products</p>
+        )}
       </div>
-
       <Pagination
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
         page={page}
         count={5}
         color="secondary"
@@ -47,7 +58,7 @@ const SellerList = () => {
           setPage(value);
         }}
       />
-    </div>
+    </>
   );
 };
 
