@@ -3,10 +3,6 @@ import { Box, Button, Chip, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { useMutation } from '@tanstack/react-query';
-import $axios from '@/lib/axios/axios.instance';
-import DeleteProductDialog from './DeleteProductDialog';
-import { isSeller } from '@/utlis/check.role';
 import { useRouter } from 'next/navigation';
 const ProductCard = (props) => {
   const productId = props._id;

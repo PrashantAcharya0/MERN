@@ -23,16 +23,6 @@ const ProductDetails = () => {
   const router = useRouter();
   const [count, setCount] = React.useState(1);
 
-  const increaseCount = () => {
-    setCount(count + 1);
-  };
-
-  const decreaseCount = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
-  };
-
   // hit get product detail api
   const { data, isPending } = useQuery({
     queryKey: ['get-product-details'],
@@ -42,6 +32,20 @@ const ProductDetails = () => {
   });
 
   const productDetail = data?.data?.productDetail;
+  const availableProductQuantity = productDetail?.quantity;
+  const isCountEqualToProductQuantity = count === availableProductQuantity;
+
+  const increaseCount = () => {
+    if (count < availableProductQuantity) {
+      setCount(count + 1);
+    }
+  };
+
+  const decreaseCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
 
   if (isPending) {
     return <CircularProgress />;
