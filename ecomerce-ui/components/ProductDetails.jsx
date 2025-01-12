@@ -10,7 +10,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
@@ -46,6 +46,20 @@ const ProductDetails = () => {
       setCount(count - 1);
     }
   };
+
+  // add product to cart
+  const { isPending: addToCartPending, mutate } = useMutation({
+    mutationKey: ['add-item-to-cart'],
+    mutationFn: async () => {
+      return await $axios.post('/cart/add/item', {
+        productId: params.id,
+        orderedQuantity: count,
+      });
+    },
+    onSuccess: (res) => {
+      // open snackbar
+    },
+  });
 
   if (isPending) {
     return <CircularProgress />;
@@ -138,7 +152,13 @@ const ProductDetails = () => {
               </IconButton>
             </Stack>
             {/* Add to Cart Button */}
-            <Button variant="contained" color="success">
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                mutate();
+              }}
+            >
               Add to Cart
             </Button>
           </>
