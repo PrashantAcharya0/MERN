@@ -1,3 +1,4 @@
+import Header from '../../components/Header';
 export const metadata = {
   title: 'Add And Edit Product',
   description: 'Login and register page',
@@ -5,7 +6,8 @@ export const metadata = {
 
 const CenterLayout = ({ children }) => {
   return (
-    <div className="h-screen w-full flex  justify-center items-center">
+    <div className="min-h-screen w-full flex flex-col gap-12  justify-center items-center">
+      <Header />
       {children}
     </div>
   );

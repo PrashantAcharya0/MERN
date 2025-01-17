@@ -13,15 +13,23 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DeleteProductDialog from './DeleteProductDialog';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import $axios from '@/lib/axios/axios.instance';
 import { isBuyer, isSeller } from '@/utlis/check.role';
+
 const ProductDetails = () => {
   const params = useParams();
   const router = useRouter();
   const [count, setCount] = React.useState(1);
+
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      setIsMounted(true);
+    }
+  }, []);
 
   // hit get product detail api
   const { data, isPending } = useQuery({
@@ -33,6 +41,7 @@ const ProductDetails = () => {
 
   const productDetail = data?.data?.productDetail;
   const availableProductQuantity = productDetail?.quantity;
+
   const isCountEqualToProductQuantity = count === availableProductQuantity;
 
   const increaseCount = () => {
@@ -59,9 +68,14 @@ const ProductDetails = () => {
     onSuccess: (res) => {
       // open snackbar
     },
+
+    onError: (error) => {
+      console.log('add to cart failed...');
+      console.log(error);
+    },
   });
 
-  if (isPending) {
+  if (isPending || !isMounted || addToCartPending) {
     return <CircularProgress />;
   }
   return (
@@ -89,14 +103,17 @@ const ProductDetails = () => {
           color="secondary"
           className="text-sm md:text-base"
         />
-        <Typography variant="h6" className="text-gray-600 text-base md:text-lg">
+        <Typography
+          variant="h6"
+          className="text-gray-600 text-base md:text-lg capitalize"
+        >
           {productDetail?.category}
         </Typography>
         <Typography
           variant="h6"
           className="font-bold text-green-500 text-lg md:text-xl"
         >
-          $ {productDetail?.price}
+          Price: $ {productDetail?.price}
         </Typography>
         <Stack
           direction="row"
@@ -133,7 +150,12 @@ const ProductDetails = () => {
               spacing={4}
               className="mt-6"
             >
-              <IconButton color="success" size="large" onClick={increaseCount}>
+              <IconButton
+                color="success"
+                size="large"
+                onClick={increaseCount}
+                disabled={isCountEqualToProductQuantity}
+              >
                 <AddIcon />
               </IconButton>
               <Typography

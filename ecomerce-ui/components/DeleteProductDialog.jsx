@@ -37,7 +37,7 @@ const DeleteProductDialog = (props) => {
   });
 
   if (isPending) {
-    return <Loader isPending />;
+    return <Loader ispending />;
   }
   return (
     <React.Fragment>

@@ -13,15 +13,23 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
 
 const appName = 'Nepal Mart';
 const drawerWidth = 240;
-const navItems = ['Home', 'Products', 'Cart'];
+const navItems = [
+  { id: 1, label: 'Home', path: '/' },
+  {
+    id: 2,
+    label: 'Cart',
+    path: '/cart',
+  },
+];
 
 const Header = (props) => {
   const { window } = props;
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -32,7 +40,7 @@ const Header = (props) => {
   const handleLogout = () => {
     localStorage.clear();
 
-    redirect('/login');
+    router.push('/login');
   };
 
   const drawer = (
@@ -43,9 +51,9 @@ const Header = (props) => {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.id} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+              <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -60,7 +68,7 @@ const Header = (props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex', mb: '5rem' }}>
+    <Box sx={{ display: 'flex', mb: '3rem' }}>
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar className="bg-red-600 ">
@@ -82,8 +90,14 @@ const Header = (props) => {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
+              <Button
+                key={item.id}
+                sx={{ color: '#fff' }}
+                onClick={() => {
+                  router.push(item.path);
+                }}
+              >
+                {item.label}
               </Button>
             ))}
             <Button disableRipple sx={{ color: '#fff' }} onClick={handleLogout}>

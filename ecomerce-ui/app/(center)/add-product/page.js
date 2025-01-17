@@ -19,7 +19,6 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { Formik } from 'formik';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 const AddProduct = () => {
   const router = useRouter();
@@ -39,7 +38,7 @@ const AddProduct = () => {
 
   return (
     <Box>
-      {isPending && <LinearProgress color="secondary" />}
+      {isPending && <LinearProgress color='secondary' />}
       <Formik
         initialValues={{
           name: '',
@@ -59,28 +58,28 @@ const AddProduct = () => {
           return (
             <form
               onSubmit={formik.handleSubmit}
-              className="auth-form  min-w-[450px]"
+              className='auth-form  min-w-[450px]'
             >
-              <Typography variant="h4">Add Product</Typography>
+              <Typography variant='h4'>Add Product</Typography>
 
               <FormControl fullWidth>
-                <TextField label="Name" {...formik.getFieldProps('name')} />
+                <TextField label='Name' {...formik.getFieldProps('name')} />
                 {formik.touched.name && formik.errors.name ? (
                   <FormHelperText error>{formik.errors.name}</FormHelperText>
                 ) : null}
               </FormControl>
 
               <FormControl fullWidth>
-                <TextField label="Brand" {...formik.getFieldProps('brand')} />
+                <TextField label='Brand' {...formik.getFieldProps('brand')} />
                 {formik.touched.brand && formik.errors.brand ? (
                   <FormHelperText error>{formik.errors.brand}</FormHelperText>
                 ) : null}
               </FormControl>
               <FormControl fullWidth>
                 <TextField
-                  label="Price"
+                  label='Price'
                   {...formik.getFieldProps('price')}
-                  type="number"
+                  type='number'
                 />
                 {formik.touched.price && formik.errors.price ? (
                   <FormHelperText error>{formik.errors.price}</FormHelperText>
@@ -89,9 +88,9 @@ const AddProduct = () => {
 
               <FormControl fullWidth>
                 <TextField
-                  label="Quantity"
+                  label='Quantity'
                   {...formik.getFieldProps('quantity')}
-                  type="number"
+                  type='number'
                 />
 
                 {formik.touched.quantity && formik.errors.quantity ? (
@@ -103,7 +102,7 @@ const AddProduct = () => {
 
               <FormControl fullWidth>
                 <InputLabel>Category</InputLabel>
-                <Select {...formik.getFieldProps('category')} label="Category">
+                <Select {...formik.getFieldProps('category')} label='Category'>
                   {productCategories.map((item, index) => {
                     return (
                       <MenuItem key={index} value={item}>
@@ -124,7 +123,7 @@ const AddProduct = () => {
                   {...formik.getFieldProps('description')}
                   multiline
                   rows={6}
-                  label="Description"
+                  label='Description'
                 />
                 {formik.touched.description && formik.errors.description ? (
                   <FormHelperText error>
@@ -141,16 +140,16 @@ const AddProduct = () => {
                   control={
                     <Checkbox {...formik.getFieldProps('freeShipping')} />
                   }
-                  label="Free Shipping"
-                  labelPlacement="start"
+                  label='Free Shipping'
+                  labelPlacement='start'
                 />
               </FormControl>
               <Button
                 disabled={isPending}
                 fullWidth
-                variant="contained"
-                color="secondary"
-                type="submit"
+                variant='contained'
+                color='secondary'
+                type='submit'
               >
                 submit
               </Button>

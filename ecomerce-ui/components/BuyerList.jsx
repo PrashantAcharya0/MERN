@@ -1,9 +1,7 @@
 'use client';
-
 import $axios from '@/lib/axios/axios.instance';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-// import Loader from './Loader';
 import { CircularProgress, Pagination } from '@mui/material';
 import ProductCard from './ProductCard';
 import { isBuyer } from '@/utlis/check.role';
@@ -35,7 +33,7 @@ const BuyerList = () => {
     return <div>{error}</div>;
   }
   return (
-    <div className="flex flex-col justify-between items-center gap-8 mt-8">
+    <div className="flex flex-col justify-between items-center gap-8  ">
       <div className="flex justify-center items-center gap-8 flex-wrap">
         {productList.map((item) => {
           return <ProductCard key={item._id} {...item} />;
