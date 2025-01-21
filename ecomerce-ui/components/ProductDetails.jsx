@@ -10,7 +10,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -18,12 +18,13 @@ import DeleteProductDialog from './DeleteProductDialog';
 import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 import $axios from '@/lib/axios/axios.instance';
 import { isBuyer, isSeller } from '@/utlis/check.role';
+import { currency } from '@/constants/general.constant';
 
 const ProductDetails = () => {
   const params = useParams();
   const router = useRouter();
   const [count, setCount] = React.useState(1);
-
+  const queryClient = useQueryClient();
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     if (typeof window !== undefined) {
@@ -66,6 +67,7 @@ const ProductDetails = () => {
       });
     },
     onSuccess: (res) => {
+      queryClient.invalidateQueries(['cart-item-count']);
       // open snackbar
     },
 
@@ -113,7 +115,7 @@ const ProductDetails = () => {
           variant="h6"
           className="font-bold text-green-500 text-lg md:text-xl"
         >
-          Price: $ {productDetail?.price}
+          Price: {currency} {productDetail?.price}
         </Typography>
         <Stack
           direction="row"

@@ -4,6 +4,8 @@ import Image from 'next/image';
 import React from 'react';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useRouter } from 'next/navigation';
+import { currency } from '@/constants/general.constant';
+
 const ProductCard = (props) => {
   const productId = props._id;
   const router = useRouter();
@@ -21,7 +23,10 @@ const ProductCard = (props) => {
         <Stack direction="row" justifyContent="space-between">
           <Typography variant="h5">{props.name}</Typography>
           <Chip label={props.brand} color="success" variant="outlined" />
-          <Typography variant="h5">${props.price}</Typography>
+          <Typography variant="h5">
+            {currency}
+            {props.price}
+          </Typography>
         </Stack>
 
         <Typography

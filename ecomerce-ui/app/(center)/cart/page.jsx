@@ -1,36 +1,40 @@
 'use client';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import CartItemCard from '@/components/CartItemCard';
-import { getCartList } from '@/lib/routes/cart.routes';
+import CartAmount from '@/components/CartAmount';
+import CartTable from '@/components/CartTable';
 import CartEmpty from '@/components/EmptyCart';
-import { isBuyer } from '@/utlis/check.role';
-import { Button, CircularProgress } from '@mui/material';
-import RemoveShoppingCartOutlinedIcon from '@mui/icons-material/RemoveShoppingCartOutlined';
 import $axios from '@/lib/axios/axios.instance';
+import { getCartList } from '@/lib/routes/cart.routes';
+import { isBuyer } from '@/utlis/check.role';
+import RemoveShoppingCartOutlinedIcon from '@mui/icons-material/RemoveShoppingCartOutlined';
+import { Button, CircularProgress } from '@mui/material';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
 const CartPage = () => {
   const [deleteSwitch, setDeleteSwitch] = useState(false);
+
   // get cart list
-  const { data, ispending } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ['cart-list', deleteSwitch],
     queryFn: () => getCartList(),
     enabled: isBuyer(),
   });
 
-  const cartData = data?.data?.cartData ?? [];
-
+  const cartData = data?.data?.cartData;
+  const subTotal = data?.data?.subTotal;
+  const queryClient = useQueryClient();
   // flush cart
-  const { ispending: flushCartPending, mutate } = useMutation({
+  const { isPending: flushCartPending, mutate } = useMutation({
     mutationKey: ['flush-cart'],
     mutationFn: async () => {
       return await $axios.delete('/cart/flush');
     },
     onSuccess: () => {
       setDeleteSwitch(!deleteSwitch);
+      queryClient.invalidateQueries(['cart-item-count']);
     },
   });
-  if (ispending || flushCartPending) {
+  if (isPending || flushCartPending) {
     return <CircularProgress />;
   }
 
@@ -49,10 +53,9 @@ const CartPage = () => {
       >
         flush cart
       </Button>
-      <div className=" flex  justify-center items-center flex-wrap gap-4 m-8">
-        {cartData.map((item) => {
-          return <CartItemCard key={item._id} {...item} />;
-        })}
+      <div className="flex justify-center  md:justify-around items-center  gap-4 md:p-8 w-full flex-wrap ">
+        <CartTable data={cartData} />
+        <CartAmount subTotal={subTotal} />
       </div>
     </>
   );

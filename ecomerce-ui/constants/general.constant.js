@@ -33,3 +33,5 @@ export const productCategories = [
   'stationery',
   'vegetables',
 ];
+
+export const currency = 'Rs.';
